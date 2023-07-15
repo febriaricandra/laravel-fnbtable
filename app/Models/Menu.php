@@ -22,6 +22,6 @@ class Menu extends Model
     ];
     public function orders()
     {
-        return $this->belongsTo(Orders::class);
+        return $this->hasMany(Orders::class, 'menu_id');
     }
 }

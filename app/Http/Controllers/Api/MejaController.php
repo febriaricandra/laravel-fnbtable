@@ -26,19 +26,9 @@ class MejaController extends Controller
     }
 
     public function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nomor_meja' => 'required|integer|max:255',
-            'qrcode' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-
-        $image_path = $request->file('qrcode')->store('image', 'public');
         $meja = Meja::create([
             'nomor_meja' => $request->nomor_meja,
-            'qrcode' => $image_path,
+            'qrcode' => $request->qrcode,
         ]);
         
         return response()->json([

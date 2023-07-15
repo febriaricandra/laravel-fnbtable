@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MenuResource;
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
@@ -98,6 +99,43 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required|string|max:255',
+            'harga' => 'required|integer',
+            'deskripsi' => 'required|string',
+            // 'gambar' => 'required|image',
+            'kategori' => 'required|string',
+            'status' => 'required|string',
+            'stok' => 'required|integer',
+            'rating' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'data' => $validator->errors(),
+                'message' => 'error, update menu',
+                'status' => '400',
+            ], 400);
+        }
+        
+        $menu = Menu::find($menu->id);
+        
+        $menu->update([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'deskripsi' => $request->deskripsi,
+            // 'gambar' => $image_path,
+            'kategori' => $request->kategori,
+            'status' => $request->status,
+            'stok' => $request->stok,
+            'rating' => $request->rating,
+        ]);
+
+        return response()->json([
+            'data' => new MenuResource($menu),
+            'message' => 'success, menu updated',
+            'status' => '200',
+        ], 200);
     }
 
     /**
@@ -113,8 +151,44 @@ class MenuController extends Controller
             'status' => '200',
         ], 200);
     }
-    public function showImage(Request $request, $namafile){
+    public function showImage($namafile){
         $path = storage_path('app/public/image/'.$namafile);
         return response()->file($path);
+    }
+
+    public function updateMenu(Request $request, Menu $menu){
+        $validator = Validator::make($request->all(),[
+            'nama' => 'required|string|max:255',
+            'harga' => 'required|integer',
+            'deskripsi' => 'required|string',
+            'kategori' => 'required|string',
+            'status' => 'required|string',
+            'stok' => 'required|integer',
+            'rating' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        
+        $image_path = $request->file('gambar')->store('image', 'public');
+        
+        $menu = Menu::find($menu->id);
+        $menu->update([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'deskripsi' => $request->deskripsi,
+            'kategori' => $request->kategori,
+            'status' => $request->status,
+            'stok' => $request->stok,
+            'rating' => $request->rating,
+            'gambar' => $image_path,
+        ]);
+
+        return response()->json([
+            'data' => new MenuResource($menu),
+            'message' => 'success, menu updated',
+            'status' => '200',
+        ], 200);
     }
 }

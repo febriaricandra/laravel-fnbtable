@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('menu_id')->constrained('menu')->onDelete('cascade');
-            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('meja_id')->constrained('meja')->onDelete('cascade');
+            $table->unsignedBigInteger('meja_id');
+            $table->unsignedBigInteger('menu_id');
+            $table->string('nama_customer');
             $table->integer('jumlah');
             $table->string('status');
             $table->integer('total');
             $table->timestamps();
+
+            $table->foreign('meja_id')->references('id')->on('meja')->onDelete('cascade');
+            $table->foreign('menu_id')->references('id')->on('menu')->onDelete('cascade');
         });
     }
 

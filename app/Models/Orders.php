@@ -11,19 +11,15 @@ class Orders extends Model
     protected $table = 'orders';
     protected $fillable = [
         'menu_id',
-        'customer_id',
         'meja_id',
+        'nama_customer',
         'total',
         'status',
         'jumlah',
     ];
     public function menu()
     {
-        return $this->hasMany(Menu::class);
-    }
-    public function customer()
-    {
-        return $this->belongsTo(Customers::class);
+        return $this->belongsTo(Menu::class, 'menu_id');
     }
     public function meja()
     {

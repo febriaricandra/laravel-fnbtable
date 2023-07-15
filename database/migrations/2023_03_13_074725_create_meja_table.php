@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('meja', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_meja');
-            $table->string('qrcode');
+            $table->text('qrcode');
             $table->timestamps();
         });
     }

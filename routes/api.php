@@ -21,6 +21,9 @@ Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']
 Route::resource('/menu', \App\Http\Controllers\Api\MenuController::class);
 Route::resource('/meja', \App\Http\Controllers\Api\MejaController::class);
 Route::resource('/customers', \App\Http\Controllers\Api\CustomersController::class);
+Route::resource('/orders', \App\Http\Controllers\Api\OrdersController::class);
+Route::post('/orders/confirm/{id}', [\App\Http\Controllers\Api\OrdersController::class, 'confirm']);
+Route::put('/test/{menu}', [\App\Http\Controllers\Api\MenuController::class, 'updateMenu']);
 Route::get('/menu/image/{image}', [\App\Http\Controllers\Api\MenuController::class, 'showImage']);
 
 // Route::get('/{nomorMeja}/menu', function(Request $request, $nomorMeja) {
