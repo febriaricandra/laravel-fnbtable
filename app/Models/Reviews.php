@@ -10,12 +10,7 @@ class Reviews extends Model
     use HasFactory;
     protected $table = 'reviews';
     protected $fillable = [
-        'orders_id',
+        'nama_customer',
         'review',
     ];
-
-    public function orders()
-    {
-        return $this->belongsTo(Orders::class);
-    }
 }

@@ -56,6 +56,12 @@ class MejaController extends Controller
     }
 
     public function destroy($id){
-
+        $meja = Meja::find($id);
+        $meja->delete();
+        return response()->json([
+            'data' => $meja,
+            'message' => 'success, delete meja by id',
+            'status' => '200',
+        ], 200);
     }
 }
