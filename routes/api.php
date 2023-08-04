@@ -24,7 +24,7 @@ Route::resource('/customers', \App\Http\Controllers\Api\CustomersController::cla
 Route::resource('/orders', \App\Http\Controllers\Api\OrdersController::class);
 Route::resource('/reviews', \App\Http\Controllers\Api\ReviewsControllers::class);
 Route::post('/orders/confirm/{id}', [\App\Http\Controllers\Api\OrdersController::class, 'confirm']);
-Route::put('/test/{menu}', [\App\Http\Controllers\Api\MenuController::class, 'updateMenu']);
+// Route::put('/test/{menu}', [\App\Http\Controllers\Api\MenuController::class, 'updateMenu']);
 Route::get('/menu/image/{image}', [\App\Http\Controllers\Api\MenuController::class, 'showImage']);
 
 // Route::get('/{nomorMeja}/menu', function(Request $request, $nomorMeja) {
